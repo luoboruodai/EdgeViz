@@ -131,8 +131,8 @@ python3 test/check_params.py
 
 ## 8. Windows 状态
 
-已生成 Windows x64 `.aex`，没有把 macOS `.plugin` 改名冒充 Windows 版本；本轮 Windows 更新正在整理到 GitHub。当前已完成 PE 格式、x64 架构、`EffectMain` 导出、PiPL `8664` 入口、资源 ID 16000 和 DLL 依赖检查；尚未在 Windows After Effects 实机上加载验证。请见 `发布物料/v3.1.2/windows/README.md`。
+已生成并上传 Windows x64 `.aex`，没有把 macOS `.plugin` 改名冒充 Windows 版本。当前已完成 PE 格式、x64 架构、`EffectMain` 导出、PiPL `8664` 入口、资源 ID 16000 和 DLL 依赖检查；尚未在 Windows After Effects 实机上加载验证。请见 `发布物料/v3.1.2/windows/README.md`。
 
 ## 9. 发布状态
 
-本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理。macOS 与 Windows x64 产物均已整理，Windows 更新待推送到 GitHub `main`。Windows 产物已完成结构验证，但仍需在 Windows After Effects 实机回归。
+本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理。macOS 与 Windows x64 产物均已整理并推送到 GitHub `main`。Windows 产物已完成结构验证，但仍需在 Windows After Effects 实机回归。
