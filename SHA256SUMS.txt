@@ -1,0 +1,2 @@
+23688bc6439e3579b0ee65b6f8434dc965a448b529d297ba8251139e3cf34560  artifacts/macos-arm64/EdgeViz Outline.plugin/Contents/MacOS/EdgeVizOutline
+09de0c3a8636188ccd146f9e98b5bec76a5f14f308f68165812996b1c840773b  artifacts/macos-arm64/EdgeViz-v3.1.2-macOS-arm64.zip

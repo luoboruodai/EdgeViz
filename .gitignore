@@ -1,0 +1,25 @@
+# Build and local outputs
+.DS_Store
+*.log
+build/
+DerivedData/
+.cache/
+
+# Adobe/After Effects private projects and caches
+*.aep
+*.aepx
+*.aet
+*.ffx
+
+# Local SDK and credentials
+SDK/
+.env
+.env.*
+*.p12
+*.pfx
+*.key
+*.pem
+
+# OS/editor files
+.vscode/
+.idea/
