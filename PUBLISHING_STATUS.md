@@ -1,6 +1,7 @@
 # Publishing status — 2026-09-29
 
 - Clean macOS arm64 source and artifact export prepared.
-- Windows `.aex` intentionally not included because no Windows build environment is available.
-- GitHub push is pending a target repository URL/owner and authenticated GitHub session.
-- Run `python3 test/check_params.py` and `python3 test/check_release.py` before pushing.
+- Pushed to the configured GitHub repository on branch `main`.
+- Commit: `85c0469` (`Release EdgeViz v3.1.2`).
+- Windows `.aex` intentionally not included because no Windows build environment is available; Windows build instructions are included.
+- Before sharing the repository further, revoke/rotate the personal access token that was pasted into the chat.

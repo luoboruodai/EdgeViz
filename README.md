@@ -125,4 +125,4 @@ python3 test/check_params.py
 
 ## 9. 发布状态
 
-本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理；发布物料已经准备好。GitHub 上传尚未执行，因为当前环境没有可用的 GitHub CLI 登录会话，也没有收到目标仓库 URL/owner/repository。提供仓库地址并完成登录后，即可推送干净导出并创建 release。
+本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理。干净导出已于 2026-09-29 推送到 GitHub 仓库的 `main` 分支，提交为 `85c0469`。Windows `.aex` 尚未构建，仓库中仅提供 Windows 构建说明。
