@@ -1,7 +1,7 @@
 # Publishing status — 2026-09-29
 
 - Clean macOS arm64 source and artifact export prepared.
-- Pushed to the configured GitHub repository on branch `main`.
-- Commit: `85c0469` (`Release EdgeViz v3.1.2`).
-- Windows `.aex` intentionally not included because no Windows build environment is available; Windows build instructions are included.
-- Before sharing the repository further, revoke/rotate the personal access token that was pasted into the chat.
+- Windows x64 `.aex` cross-compiled from the same source and added to the release tree.
+- Windows PE/resource/export/dependency checks passed; Windows After Effects runtime validation is still required.
+- This Windows artifact update is staged locally and ready to push to the configured GitHub `main` branch.
+- Do not commit Adobe SDK files or personal tokens.

@@ -1,2 +1,4 @@
 23688bc6439e3579b0ee65b6f8434dc965a448b529d297ba8251139e3cf34560  artifacts/macos-arm64/EdgeViz Outline.plugin/Contents/MacOS/EdgeVizOutline
 09de0c3a8636188ccd146f9e98b5bec76a5f14f308f68165812996b1c840773b  artifacts/macos-arm64/EdgeViz-v3.1.2-macOS-arm64.zip
+a548759cb10f017123eb340a5df5df58cb4a4e96db7533590318c5e80dd20dc5  artifacts/windows-x64/EdgeViz Outline.aex
+923f03d64678440ca91fa5ca14fe1618b51224fe6dc3cf14efbe0242334eb84b  artifacts/windows-x64/EdgeViz-v3.1.2-Windows-x64.zip

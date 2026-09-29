@@ -11,3 +11,4 @@
 - Avoided key-vertex and motion sampling work when those overlays are disabled.
 - Reduced per-frame heap allocation and pixel-outline row lookup overhead.
 - Rebuilt as macOS arm64, PiPL eVER `0x189601`.
+- Added a Windows x64 PE32+ `.aex` cross-build with PiPL resource ID 16000 and `EffectMain` export; runtime AE validation remains pending.

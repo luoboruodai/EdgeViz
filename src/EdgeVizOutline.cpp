@@ -90,8 +90,28 @@ static void ReleaseSuites(PF_InData *in_data, Suites *s)
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdio.h>
+#if defined(_WIN32)
+  #define WIN32_LEAN_AND_MEAN
+  #ifndef NOMINMAX
+    #define NOMINMAX
+  #endif
+  #include <windows.h>
+  #include <io.h>
+#else
+  #include <pthread.h>
+  #include <unistd.h>
+#endif
+#ifndef M_PI
+  #define M_PI 3.141592653589793238462643383279502884
+#endif
+#if defined(_WIN32)
+  #define EV_DBG_LOG_PATH "ev_dbg.log"
+  #define EV_DBG_MARK_PATH "ev_dbg_on"
+#else
+  #define EV_DBG_LOG_PATH "/tmp/ev_dbg.log"
+  #define EV_DBG_MARK_PATH "/tmp/ev_dbg_on"
+#endif
 
 #define PLUGIN_NAME        "EdgeViz"
 #define MAJOR_VERSION      3
@@ -1308,7 +1328,7 @@ static void WalkShapeGroup(Suites *suites, PF_InData *in_data,
       ChildSig s;
       GetChildSig(suites, childH, &s);
       if (getenv("EVIZ_DEBUG")) {
-        FILE *fd = fopen("/tmp/ev_dbg.log", "a");
+        FILE *fd = fopen(EV_DBG_LOG_PATH, "a");
         if (fd) { fprintf(fd, "walk d=%d i=%ld sig: total=%ld grp=%ld 1d=%ld 2d=%ld sp=%ld col=%ld mask=%ld\n",
                           depth, (long)i, (long)s.total, (long)s.nGroup, (long)s.nOneD, (long)s.nTwoD,
                           (long)s.nSpatial, (long)s.nColor, (long)s.nMask); fclose(fd); }
@@ -1352,7 +1372,7 @@ static AEGP_StreamRefH FindRootVectorsGroup(Suites *suites, AEGP_StreamRefH root
     nm[0] = 0;
     bool got = StreamNameEN(suites, cH, nm, sizeof(nm));
     if (getenv("EVIZ_DEBUG")) {
-      FILE *fd = fopen("/tmp/ev_dbg.log", "a");
+      FILE *fd = fopen(EV_DBG_LOG_PATH, "a");
       if (fd) { fprintf(fd, "root child %ld gt=%d got=%d name=[%s]\n", (long)i, (int)gt, (int)got, nm); fclose(fd); }
     }
     if (gt != AEGP_StreamGroupingType_LEAF && got && !strcmp(nm, "Contents"))
@@ -2362,16 +2382,19 @@ GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_
 /* ================= debug log (env EVIZ_DEBUG or /tmp/ev_dbg_on gated) ================= */
 
 #include <stdarg.h>
-#include <unistd.h>
 
 static bool DbgOn()
 {
-  return getenv("EVIZ_DEBUG") != NULL || access("/tmp/ev_dbg_on", F_OK) == 0;
+#if defined(_WIN32)
+  return getenv("EVIZ_DEBUG") != NULL || _access(EV_DBG_MARK_PATH, 0) == 0;
+#else
+  return getenv("EVIZ_DEBUG") != NULL || access(EV_DBG_MARK_PATH, F_OK) == 0;
+#endif
 }
 static void DbgLog(const char *fmt, ...)
 {
   if (!DbgOn()) return;
-  FILE *f = fopen("/tmp/ev_dbg.log", "a");
+  FILE *f = fopen(EV_DBG_LOG_PATH, "a");
   if (!f) return;
   va_list ap;
   va_start(ap, fmt);
@@ -2407,7 +2430,13 @@ static A_long TargetParam(PF_ParamDef *params[])
 static bool IsAerenderProc()
 {
   static const bool isAerender = [] {
+#if defined(_WIN32)
+    char path[MAX_PATH] = {0};
+    DWORD n = GetModuleFileNameA(NULL, path, (DWORD)sizeof(path));
+    const char *pn = n ? path : NULL;
+#else
     const char *pn = getprogname();
+#endif
     return pn && strstr(pn, "aerender") != NULL;
   }();
   return isAerender;
@@ -2446,7 +2475,13 @@ FrameSetup8(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_
   // enforce that validation (the old render-time bake always worked there),
   // so: aerender process -> always bake; GUI process -> bake only when this
   // selector arrived on the main thread. On a skip, Render8 bakes inline.
+#if defined(_WIN32)
+  // The Windows host does not expose pthread_main_np. Keep FRAME_SETUP on the
+  // host selector path; Render8 still uses the serialized frame blob.
+  const bool mainT = true;
+#else
   const bool mainT = pthread_main_np() != 0;
+#endif
   const bool skip  = !IsAerenderProc() && !mainT;
   DbgLog("FS8: main=%d aer=%d needGeo=%d target=%ld skip=%d\n",
          (int)mainT, (int)IsAerenderProc(), (int)NeedGeoParams(params),

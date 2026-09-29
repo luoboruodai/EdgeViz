@@ -1,13 +1,13 @@
 # EdgeViz —— After Effects 图层边缘 / 路径可视化插件
 
-**当前版本：v3.1.2** · **PiPL eVER：0x189601** · **构建目标：macOS Apple Silicon arm64**  
+**当前版本：v3.1.2** · **PiPL eVER：0x189601** · **构建目标：macOS arm64 + Windows x64**
 **最后更新：2026-09-29**
 
 EdgeViz 是一个 After Effects 原生效果插件，用于显示图层外框、文字字形轮廓、形状路径、贝塞尔点与手柄、遮罩剪影、运动路径，以及预合成内部的可见结构。
 
 菜单：**效果 → PlugIn EdgeViz → EdgeViz**
 
-> 当前可验证的二进制为 macOS arm64。Windows `.aex` 本次没有伪造或提交：仓库中只会保留 Windows 构建说明，待提供 Windows/Visual Studio + Adobe AE SDK 构建环境后再生成正式文件。
+> 当前已生成 macOS arm64 `.plugin` 和 Windows x64 `.aex`。Windows 二进制由 macOS 上的 MinGW-w64 交叉编译，并通过 PE、导出符号、PiPL 资源和依赖检查；当前环境没有 Windows After Effects，尚未完成 Windows AE 实机加载回归。
 
 ## 1. 本次 v3.1.2 更新
 
@@ -51,6 +51,7 @@ EdgeViz 是一个 After Effects 原生效果插件，用于显示图层外框、
 | 路径 | 用途 |
 |---|---|
 | `EdgeViz Outline.plugin/` | 当前 macOS arm64 最终插件 bundle |
+| `源码工程/build-win/` | 当前 Windows x64 `.aex` 交叉编译产物 |
 | `源码工程/` | C++ 源码、PiPL、构建脚本、静态检查和本机编译产物 |
 | `验证截图/` | 本机回归截图；发布目录只挑选脱敏后的 v3.1.2 截图 |
 | `验证工程/` | 本机 AE 回归工程副本；不进入公开 GitHub 发布包 |
@@ -73,18 +74,27 @@ rm -rf "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/Ed
 
 当前构建件为 ad-hoc 签名，仅适合开发机/测试机使用；对外分发还需要开发者签名、公证和安装说明。
 
-## 5. 源码构建（macOS arm64）
+## 5. 源码构建
+
+### macOS arm64
 
 ```bash
 cd 源码工程
-./build.sh
-```
-
-依赖：Xcode Command Line Tools 中的 `clang++`、`Rez`、`codesign`，以及可合法使用的 Adobe After Effects SDK 头文件。公开发布仓库不复制 Adobe SDK；构建脚本支持通过 `AE_SDK_ROOT` 指向本机 SDK：
-
-```bash
 AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build.sh
 ```
+
+依赖：Xcode Command Line Tools 中的 `clang++`、`Rez`、`codesign`，以及可合法使用的 Adobe After Effects SDK 头文件。
+
+### Windows x64 `.aex`（交叉编译）
+
+```bash
+cd 源码工程
+AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build_win.sh
+```
+
+依赖：x86_64 MinGW-w64（`x86_64-w64-mingw32-g++`、`windres`、`strip`）、Python 3，以及 Adobe AE SDK 头文件。脚本生成 PE32+ DLL，嵌入 `PiPL` 资源并只导出 `EffectMain`。
+
+当前 Windows 产物使用 MinGW-w64 交叉编译，依赖 Windows Universal CRT API-set 与 `KERNEL32.dll`。由于本机没有 Windows After Effects，仍需在 Windows + 目标 AE 版本上安装并执行实际加载/渲染回归；正式商业分发建议使用匹配版本的 Visual Studio/Adobe SDK 重新构建。
 
 本机开发副本保留了编译所需 SDK，但公开 GitHub 清洁导出会排除 `SDK/Headers`、缓存、历史工程和旧坏插件。
 
@@ -121,8 +131,8 @@ python3 test/check_params.py
 
 ## 8. Windows 状态
 
-本轮没有 Windows/Visual Studio/AE Windows SDK 构建环境，也没有可验证的 `.aex`。不会把 macOS `.plugin` 改名为 `.aex` 冒充 Windows 版本。请见 `发布物料/v3.1.2/windows/README.md`。
+已生成 Windows x64 `.aex`，没有把 macOS `.plugin` 改名冒充 Windows 版本；本轮 Windows 更新正在整理到 GitHub。当前已完成 PE 格式、x64 架构、`EffectMain` 导出、PiPL `8664` 入口、资源 ID 16000 和 DLL 依赖检查；尚未在 Windows After Effects 实机上加载验证。请见 `发布物料/v3.1.2/windows/README.md`。
 
 ## 9. 发布状态
 
-本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理。干净导出已于 2026-09-29 推送到 GitHub 仓库的 `main` 分支，提交为 `85c0469`。Windows `.aex` 尚未构建，仓库中仅提供 Windows 构建说明。
+本机 v3.1.2 已构建、安装、重启 AE、回归渲染并完成隐私清理。macOS 与 Windows x64 产物均已整理，Windows 更新待推送到 GitHub `main`。Windows 产物已完成结构验证，但仍需在 Windows After Effects 实机回归。
