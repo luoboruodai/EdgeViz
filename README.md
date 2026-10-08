@@ -1,5 +1,7 @@
 # EdgeViz After Effects Plugin
 
+**English** | [简体中文](README.zh-CN.md)
+
 **Release: v0.1.0** · **PiPL: `0x00008601`** · **Platforms: macOS arm64 + Windows x64**
 **Updated: 2026-10-08**
 
