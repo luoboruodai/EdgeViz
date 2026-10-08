@@ -1,7 +1,6 @@
 # Publishing status — 2026-10-08
 
-- v0.1.1 replaces the problematic v0.1.0 Windows release for distribution; macOS package is now universal Intel + Apple Silicon.
-- Source, PiPL/PE resources, ZIP files, and SHA-256 manifest rebuilt and checked.
-- AE 26.5 Apple Silicon one-frame aerender test passed; the previously installed older plug-in was restored after testing.
-- Windows AE 23–26 and macOS AE 23–25/Intel runtime verification are still outstanding. Do not describe them as certified.
-- The old v0.1.0 release should be labelled superseded; see the latest release for corrected packages.
+- Released **v0.1.1** to `luoboruodai/EdgeViz` as the latest GitHub Release with macOS universal ZIP, Windows x64 ZIP and their SHA-256 manifest. A fresh download of both ZIPs matched the local artifacts and `SHA256SUMS.txt`.
+- Marked v0.1.0 as superseded; removed its reported-problematic Windows ZIP and old checksum asset. Its macOS arm64 ZIP is retained only as a historical artifact.
+- Source, PiPL/PE resources, ZIP files and checksum manifest rebuilt and statically checked. AE 26.5 on Apple Silicon successfully rendered one frame of the supplied test comp; the old installed plug-in was restored afterward.
+- **Outstanding:** Windows AE 23–26 and macOS AE 23–25/Intel runtime loading, UI and rendering tests. v0.1.1 is targeted at these versions but must not be called host-certified across the entire matrix.
