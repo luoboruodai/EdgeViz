@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate an AE .rsrc (resource fork) containing a 'PiPL' resource for
-EdgeViz Outline. No Rez needed — the format is written out directly.
+EdgeViz. No Rez needed — the format is written out directly.
 
 PiPL data layout (all big-endian):
   uint32 propertyCount
@@ -33,12 +33,12 @@ def u16(v):
 
 PROPS = [
     ("kind", b"eFKT"),                          # 0  AEEffect
-    ("name", pstr("EdgeViz Outline")),          # 1
+    ("name", pstr("EdgeViz")),          # 1
     ("catg", pstr("PlugIn EdgeViz")),           # 2  effects-menu category
     ("ma64", pstr("EffectMain")),               # 3  Mac ARM64 entry point
     ("ePVR", u32(0x00020000)),                  # 4  PiPL version 2.0
     ("eSVR", u32(0x000D0002)),                  # 5  required host spec version (13.28)
-    ("eVER", u32(0x00189601)),                  # 6  EdgeViz v3.1.2 (PF_VERSION 0x189601)
+    ("eVER", u32(0x00008601)),                  # 6  EdgeViz v0.1.0 (PF_VERSION 0x00008601)
     ("eINF", u16(0)),                           # 7  info flags
     ("eGLO", u32(0x04000446)),                   # 8  PIX_INDEPENDENT | USE_OUTPUT_EXTENT | WIDE_TIME_INPUT | NON_PARAM_VARY | SEND_UPDATE_PARAMS_UI
     ("eGL2", u32(10)),                              # 9  I_USE_3D_CAMERA | PARAM_GROUP_START_COLLAPSED_FLAG

@@ -1,5 +1,5 @@
 /*
- * EdgeVizOutline.cpp — PF_Effect "EdgeViz" (com.edgeviz.outline) v3.1.2
+ * EdgeVizOutline.cpp — PF_Effect "EdgeViz" (com.edgeviz.outline) v0.1.0
  *
  * Cyclops-style layer visualization as a binary effect. Apply to any layer:
  *   structure group: edge frame + corner handles (3D layers projected through
@@ -114,9 +114,9 @@ static void ReleaseSuites(PF_InData *in_data, Suites *s)
 #endif
 
 #define PLUGIN_NAME        "EdgeViz"
-#define MAJOR_VERSION      3
+#define MAJOR_VERSION      0
 #define MINOR_VERSION      1
-#define BUG_VERSION        2
+#define BUG_VERSION        0
 #define STAGE_VERSION      PF_Stage_RELEASE
 #define BUILD_VERSION      1
 

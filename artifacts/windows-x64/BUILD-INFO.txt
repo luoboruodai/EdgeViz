@@ -1,7 +1,5 @@
-EdgeViz v3.1.2 Windows x64 build
-Date: 2026-09-29
+EdgeViz v0.1.0 Windows x64 build
 Target: PE32+ DLL / x86-64
-Toolchain: MinGW-w64 x86_64
 PiPL: resource type PiPL, ID 16000, entry key 8664
 Export: EffectMain
-Runtime validation: PE/resource/dependency checks passed; Windows After Effects runtime test unavailable on the build host.
+Runtime: structure checks passed; Windows After Effects runtime test remains required.

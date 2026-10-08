@@ -1,14 +1,9 @@
 # Changelog
 
-## v3.1.2 — 2026-09-29
+## v0.1.0 — 2026-10-08
 
-- Fixed incomplete mixed CJK/Latin text vertices and Bezier handle visualization.
-- Fixed current-frame motion-frame growth and motion-path occlusion.
-- Improved multi-shape-layer motion/occluder association.
-- Added recursive precomp shape/text/footage drill-down.
-- Hardened mask-outline reads against partial/invalid vertex data.
-- Added adjacency lookup for complex mask silhouettes.
-- Avoided key-vertex and motion sampling work when those overlays are disabled.
-- Reduced per-frame heap allocation and pixel-outline row lookup overhead.
-- Rebuilt as macOS arm64, PiPL eVER `0x189601`.
-- Added a Windows x64 PE32+ `.aex` cross-build with PiPL resource ID 16000 and `EffectMain` export; runtime AE validation remains pending.
+- Published unified `EdgeViz` macOS arm64 and Windows x64 plug-in artifacts.
+- Set plug-in version metadata and PiPL version to `0.1.0` / `0x00008601`.
+- Unified delivered names to `EdgeViz.plugin`, `EdgeViz.aex`, and `EdgeViz-v0.1.0-*` packages.
+- Retained match name `com.edgeviz.outline` and persisted parameter IDs for project compatibility.
+- Updated README, build scripts, checksums, Windows build notes, and release material.

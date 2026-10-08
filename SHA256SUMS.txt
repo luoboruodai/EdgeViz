@@ -1,4 +1,4 @@
-23688bc6439e3579b0ee65b6f8434dc965a448b529d297ba8251139e3cf34560  artifacts/macos-arm64/EdgeViz Outline.plugin/Contents/MacOS/EdgeVizOutline
-09de0c3a8636188ccd146f9e98b5bec76a5f14f308f68165812996b1c840773b  artifacts/macos-arm64/EdgeViz-v3.1.2-macOS-arm64.zip
-a548759cb10f017123eb340a5df5df58cb4a4e96db7533590318c5e80dd20dc5  artifacts/windows-x64/EdgeViz Outline.aex
-923f03d64678440ca91fa5ca14fe1618b51224fe6dc3cf14efbe0242334eb84b  artifacts/windows-x64/EdgeViz-v3.1.2-Windows-x64.zip
+c4dead3b9942e709beda5c352553c911523595fc389fe559247326b8a77a8ff9  artifacts/macos-arm64/EdgeViz.plugin/Contents/MacOS/EdgeViz
+99b92b9a64d0bb533b0da751a5b832cbfeae7a54b9d156878f601bb110d4787f  artifacts/macos-arm64/EdgeViz-v0.1.0-macOS-arm64.zip
+543cbde97aa3e3fc4b3740546c36b3283a11e6f0fb6e2139a364fd10814e307e  artifacts/windows-x64/EdgeViz.aex
+bb86ab762b2be3d2582c9150be4dd50f30c76557ca696a3a2941fe206df42abb  artifacts/windows-x64/EdgeViz-v0.1.0-Windows-x64.zip

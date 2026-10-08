@@ -2,6 +2,7 @@
 .DS_Store
 *.log
 build/
+build-win/
 DerivedData/
 .cache/
 

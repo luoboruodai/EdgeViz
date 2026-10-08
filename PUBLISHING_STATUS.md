@@ -1,8 +1,8 @@
-# Publishing status — 2026-09-29
+# Publishing status — 2026-10-08
 
-- Clean macOS arm64 source and artifact export prepared.
-- Windows x64 `.aex` cross-compiled from the same source and added to the release tree.
-- Windows PE/resource/export/dependency checks passed; Windows After Effects runtime validation is still required.
-- Pushed to the configured GitHub repository on branch `main`.
-- Windows artifact update commit: `474122a` (`Add Windows x64 AEX build and release artifacts`).
-- Do not commit Adobe SDK files or personal tokens.
+- Prepared release `v0.1.0` with unified `EdgeViz` macOS and Windows artifact names.
+- macOS and Windows artifacts rebuilt from the updated source and checksummed.
+- GitHub README and build documentation updated.
+- Local source and release tree passed version, parameter, privacy, and checksum checks.
+- GitHub push and Release creation require an authenticated GitHub session; no personal token is stored in this repository.
+- Windows runtime validation still requires a Windows After Effects machine.

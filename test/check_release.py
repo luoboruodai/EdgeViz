@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 secret = re.compile(r"(?i)(api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd|bearer|private[_-]?key)\s*[:=]|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|-----BEGIN .*PRIVATE KEY-----")
 private_path = re.compile(r"/(?:Users|Volumes)/[^\s\"']+")
 for p in ROOT.rglob('*'):
-    if not p.is_file() or '.git' in p.parts or p == Path(__file__):
+    if not p.is_file() or '.git' in p.parts or p == Path(__file__) or any(part in {'build','build-win'} for part in p.parts):
         continue
     if p.suffix.lower() in {'.aep', '.aepx', '.aet'}:
         raise SystemExit(f'private AE project must not be published: {p}')
