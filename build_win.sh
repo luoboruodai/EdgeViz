@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Cross-build EdgeViz.aex (Windows x64 PE plug-in) from macOS/Linux.
+# AE runtime compatibility requires a real Windows host with each target AE version.
 # Requires a licensed Adobe AE SDK and an x86_64 MinGW-w64 toolchain.
 set -euo pipefail
 
@@ -29,6 +30,7 @@ cp "$DIR/pipl/EdgeVizOutlineWin.rc" "$OUT/EdgeViz.rc"
   cd "$OUT"
   "$WINDRES" -O coff -i EdgeViz.rc -o EdgeViz.pipl.res
 )
+python3 "$DIR/pipl/preserve_pipl_case.py" "$OUT/EdgeViz.pipl.res"
 
 "$CXX" -shared -static -O2 -std=c++14 -fno-exceptions -fno-rtti \
   -D_WIN32 -DMSWindows -D_WINDOWS \
@@ -40,5 +42,5 @@ cp "$DIR/pipl/EdgeVizOutlineWin.rc" "$OUT/EdgeViz.rc"
 "$STRIP" --strip-unneeded "$AEX"
 
 file "$AEX"
-"$STRIP" --strip-debug "$AEX" >/dev/null 2>&1 || true
+python3 "$DIR/test/check_windows_binary.py" "$AEX"
 printf 'built: %s\n' "$AEX"

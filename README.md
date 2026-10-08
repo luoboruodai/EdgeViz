@@ -1,82 +1,48 @@
-# EdgeViz After Effects Plugin
+# EdgeViz — After Effects effect plug-in
 
 **English** | [简体中文](README.zh-CN.md)
 
-**Release: v0.1.0** · **PiPL: `0x00008601`** · **Platforms: macOS arm64 + Windows x64**
-**Updated: 2026-10-08**
+**v0.1.1** · match name `com.edgeviz.outline` · target: After Effects 23–26 · macOS Intel/Apple Silicon + Windows x64
 
-EdgeViz is an Adobe After Effects effect plug-in for visualizing layer frames, text glyph outlines, shape paths, Bezier vertices and handles, mask silhouettes, motion paths, and nested precomp content.
+EdgeViz overlays layer bounds, text glyphs, shape paths, Bézier vertices/handles, mask silhouettes, motion paths, and nested precomp geometry. The effect match name and all 39 persisted parameter IDs are unchanged from v0.1.0.
 
-The effect match name remains `com.edgeviz.outline` for project compatibility. The user-facing plug-in name and delivered file names are unified as **EdgeViz**.
+## Downloads
 
-## Release files
+- `EdgeViz-v0.1.1-macOS-universal.zip` — `EdgeViz.plugin`, both `arm64` and `x86_64` slices, ad-hoc signed.
+- `EdgeViz-v0.1.1-Windows-x64.zip` — `EdgeViz.aex`, PE32+ Windows x64 DLL.
+- `SHA256SUMS.txt` — hashes for those two downloadable ZIPs.
 
-- `artifacts/macos-arm64/EdgeViz.plugin` — macOS arm64 plug-in bundle.
-- `artifacts/macos-arm64/EdgeViz-v0.1.0-macOS-arm64.zip` — macOS package.
-- `artifacts/windows-x64/EdgeViz.aex` — Windows x64 PE32+ plug-in.
-- `artifacts/windows-x64/EdgeViz-v0.1.0-Windows-x64.zip` — Windows package.
-- `SHA256SUMS.txt` — checksums for the release artifacts.
+The previous v0.1.0 **Windows** binary is superseded. Do not install both an older `EdgeViz Outline` copy and the new `EdgeViz` copy: they share one match name.
 
-## v0.1.0 highlights
+## Install
 
-- Complete mixed CJK/Latin text vertices and Bezier-handle visualization.
-- Visible fallback handles for zero-tangent text and parametric-shape corners.
-- Motion frames grow from the current object plus the already-travelled path prefix.
-- Motion paths are drawn below the moving object and clipped by its current occlusion area.
-- Separate motion/path/occlusion data for multiple shapes on one shape layer.
-- Recursive precomp drill-down for shapes, text, footage edges, and nested precomps.
-- Safer invalid-mask handling and faster complex silhouette chaining.
-- Skips key-vertex and motion sampling work when those overlays are disabled.
-- Point styles: Circle, Square, Triangle, Diamond, Cross, and Custom Layer.
-- Handle length, handle size, point size, color, and pixel-outline controls.
+1. **Quit After Effects completely.** Remove any earlier EdgeViz/EdgeViz Outline binary from the appropriate `MediaCore` directory, including duplicate copies in version-specific plug-in folders.
+2. On macOS, copy the entire `EdgeViz.plugin` folder to `~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/`.
+3. On Windows x64, copy `EdgeViz.aex` to `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\` (administrator permission may be needed).
+4. Restart AE. If it crashes while scanning plug-ins, remove `EdgeViz.aex` to recover and send the AE/Windows version and crash dump to the maintainer. The path shown in the crash dialog points to a **scan directory**, not necessarily the exact failing module.
 
-## Install on macOS
+Uninstall by removing that single plug-in copy and restarting AE. The macOS bundle is ad-hoc signed, **not notarized**; the Windows binary has **no Authenticode signature**.
 
-```bash
-cp -R "EdgeViz.plugin" \
-  "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/"
-```
+## Verification and compatibility limits
 
-Fully quit and restart After Effects after installing. To uninstall:
+- macOS: the universal binary, both PiPL architecture entries, bundle signature, and one-frame rendering of the supplied `EV_Test` project in **AE 26.5 on Apple Silicon** passed.
+- Windows: the PE x64 machine type, loader imports, `EffectMain` export, version resource, complete big-endian PiPL payload, exact-case `PiPL` resource type, entry key `8664`, ID 16000, and ZIP integrity passed static checks. A script to test actual Windows OS loading is provided at `test/smoke_windows_load.py`.
+- **AE 23, 24, 25 and Windows AE 23–26 have not been tested on their respective hosts.** Targeting their APIs does not establish runtime compatibility. Test plug-in loading, applying the effect, reopening an older project, and rendering on *each* target AE version before a deployment claim. Windows on Arm native AE requires a separate ARM64 build; this package is x64 only.
+
+The current build uses older CS6-compatible Adobe headers with MinGW-w64 for Windows. Adobe recommends building with recent SDK headers and testing every claimed host version; an MSVC/modern SDK rebuild and real Windows AE regression remain recommended before production use. See `windows/README.md` for a validation matrix.
+
+## Build and checks
+
+The public repository excludes the licensed Adobe SDK. Set `AE_SDK_ROOT` to your own SDK checkout, then run from the repository root:
 
 ```bash
-rm -rf "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/EdgeViz.plugin"
-```
-
-The delivered macOS bundle is ad-hoc signed for development/testing. Production distribution requires appropriate signing and notarization.
-
-## Build from source
-
-The public repository intentionally excludes the Adobe SDK. Set `AE_SDK_ROOT` to a licensed SDK checkout.
-
-### macOS arm64
-
-```bash
-AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build.sh
-```
-
-Requires Apple Clang, `Rez`, and `codesign`.
-
-### Windows x64
-
-```bash
-AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build_win.sh
-```
-
-Requires Python 3 and an x86_64 MinGW-w64 toolchain (`x86_64-w64-mingw32-g++`, `windres`, and `strip`). The script builds a PE32+ DLL, embeds a `PiPL` resource ID 16000 with the Windows x64 entry key `8664`, and exports `EffectMain`.
-
-The Windows artifact has passed PE format, x64 architecture, export, PiPL, resource-ID, version-resource, and dependency checks. This macOS build host does not have Windows After Effects, so Windows AE loading and rendering must still be verified on a Windows machine with the target AE version. For commercial distribution, rebuild with a matching Visual Studio/Adobe SDK toolchain and sign the binary.
-
-## Tests
-
-```bash
+AE_SDK_ROOT=/path/to/AdobeSDK ./build.sh       # macOS universal, requires Xcode tools
+AE_SDK_ROOT=/path/to/AdobeSDK ./build_win.sh   # Windows x64 cross-build, requires MinGW-w64
+python3 scripts/package_release.py
 python3 test/check_params.py
+python3 test/check_windows_binary.py
+python3 test/check_version.py
 python3 test/check_release.py
 ```
 
-The repository contains sanitized verification images only; no `.aep` projects, user media, caches, logs, SDK files, or credentials are included.
-
-## Repository and release
-
-Repository: `luoboruodai/EdgeViz`
-Release tag: `v0.1.0`
+Repository: `luoboruodai/EdgeViz` · release tag: `v0.1.1`.

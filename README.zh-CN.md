@@ -1,82 +1,48 @@
-# EdgeViz After Effects 插件
+# EdgeViz — After Effects 特效插件
 
 [English](README.md) | **简体中文**
 
-**版本：v0.1.0** · **PiPL：`0x00008601`** · **平台：macOS arm64 + Windows x64**
-**更新日期：2026-10-08**
+**v0.1.1** · 效果匹配名 `com.edgeviz.outline` · 目标 AE 23–26 · macOS Intel/Apple Silicon + Windows x64
 
-EdgeViz 是一款 Adobe After Effects 效果插件，用于可视化图层边框、文字字形轮廓、形状路径、贝塞尔顶点与手柄、蒙版剪影、运动路径以及嵌套预合成内容。
+EdgeViz 可显示图层边框、文字字形、形状路径、贝塞尔顶点及手柄、蒙版轮廓、运动路径和嵌套预合成几何。效果匹配名及 39 个持久化参数 ID 均保持不变，以延续旧工程的识别关系。
 
-效果的匹配名称（match name）保持为 `com.edgeviz.outline`，以保证工程兼容性。面向用户的插件名称与交付文件名统一为 **EdgeViz**。
+## 下载
 
-## 发布文件
+- `EdgeViz-v0.1.1-macOS-universal.zip`：包含 arm64 和 x86_64 双架构 `EdgeViz.plugin`，开发用途的临时签名。
+- `EdgeViz-v0.1.1-Windows-x64.zip`：包含 PE32+ x64 `EdgeViz.aex`。
+- `SHA256SUMS.txt`：上述两个 ZIP 的 SHA-256 校验值。
 
-- `artifacts/macos-arm64/EdgeViz.plugin` — macOS arm64 插件包。
-- `artifacts/macos-arm64/EdgeViz-v0.1.0-macOS-arm64.zip` — macOS 安装包。
-- `artifacts/windows-x64/EdgeViz.aex` — Windows x64 PE32+ 插件。
-- `artifacts/windows-x64/EdgeViz-v0.1.0-Windows-x64.zip` — Windows 安装包。
-- `SHA256SUMS.txt` — 发布文件的校验和。
+**旧版 v0.1.0 的 Windows 文件已被此版取代。** 请勿同时安装旧的 `EdgeViz Outline` 和新的 `EdgeViz`，两者使用相同的效果匹配名。
 
-## v0.1.0 亮点
+## 安装与故障恢复
 
-- 完整的中英文混排文字顶点与贝塞尔手柄可视化。
-- 零切线文字与参数化形状转角处的可见回退手柄。
-- 运动残影从当前物体连同已走过的路径前缀一起生长。
-- 运动路径绘制在运动物体下方，并按其当前遮挡区域裁剪。
-- 同一形状图层上的多个形状拥有独立的运动/路径/遮挡数据。
-- 递归深入预合成，覆盖形状、文字、素材边缘与嵌套预合成。
-- 更安全的无效蒙版处理与更快的复杂剪影链式计算。
-- 关闭对应叠加显示时，跳过关键顶点与运动采样计算。
-- 点样式：圆形、方形、三角形、菱形、十字与自定义图层。
-- 手柄长度、手柄大小、点大小、颜色与像素描边控制。
+1. **完全退出 AE。** 清理 `MediaCore` 以及 AE 按版本划分的插件目录中旧的、重复的 EdgeViz 文件。
+2. macOS：将完整的 `EdgeViz.plugin` 文件夹复制到 `~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/`。
+3. Windows x64：将 `EdgeViz.aex` 复制到 `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\`，可能需要管理员权限。
+4. 重新启动 AE。若扫描插件时仍崩溃，移除 `EdgeViz.aex` 即可先恢复启动，并提供 AE 版本、Windows 版本及崩溃转储。截图中的路径是**扫描目录**，不足以单独证明具体是哪一个模块崩溃。
 
-## macOS 安装
+macOS 包只有 ad-hoc 签名、**未经公证**；Windows 包**未做 Authenticode 签名**。
 
-```bash
-cp -R "EdgeViz.plugin" \
-  "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/"
-```
+## 已验证范围与限制
 
-安装后请完全退出并重新启动 After Effects。卸载方法：
+- macOS：已核验双架构 Mach-O、两个 PiPL 入口、签名，并在 **Apple Silicon 的 AE 26.5** 对附带的 `EV_Test` 工程完成一帧渲染。
+- Windows：已静态核验 x64 PE、导入依赖、`EffectMain` 导出、版本资源、完整的 PiPL、区分大小写的 `PiPL` 资源类型、`8664` 入口、资源 ID 16000 以及 ZIP 完整性。`test/smoke_windows_load.py` 可供 Windows 系统上做加载初检。
+- **尚未分别在 AE 23/24/25 及 Windows AE 23–26 上实测安装、效果调用和渲染。** 因此本版只以这些版本为兼容目标，不应把静态检查当成全部实机兼容认证。Windows on Arm 的原生 AE 还需要单独的 ARM64 插件，本包仅适用于 x64。
+
+当前 Windows 构建使用较旧的 CS6 兼容 Adobe 头文件及 MinGW-w64。正式部署前建议用较新的 Adobe SDK/Visual Studio 重新构建，并针对每个目标 AE 版本完成加载、效果应用、旧工程重开和渲染回归。
+
+## 构建与校验
+
+公开仓库不含 Adobe SDK。设置 `AE_SDK_ROOT` 后运行：
 
 ```bash
-rm -rf "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/EdgeViz.plugin"
-```
-
-交付的 macOS 插件包为开发/测试用途的 ad-hoc 签名。正式发布需要适当的签名与公证（notarization）。
-
-## 从源码构建
-
-公开仓库有意不包含 Adobe SDK。请将 `AE_SDK_ROOT` 指向合法的 SDK 目录。
-
-### macOS arm64
-
-```bash
-AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build.sh
-```
-
-需要 Apple Clang、`Rez` 与 `codesign`。
-
-### Windows x64
-
-```bash
-AE_SDK_ROOT=/path/to/AfterEffectsSDK ./build_win.sh
-```
-
-需要 Python 3 和 x86_64 MinGW-w64 工具链（`x86_64-w64-mingw32-g++`、`windres` 与 `strip`）。该脚本构建 PE32+ DLL，嵌入资源 ID 为 16000 的 `PiPL`（Windows x64 入口键 `8664`），并导出 `EffectMain`。
-
-Windows 构建产物已通过 PE 格式、x64 架构、导出符号、PiPL、资源 ID、版本资源与依赖项检查。由于本 macOS 构建主机没有 Windows 版 After Effects,Windows 上的 AE 加载与渲染仍需在装有目标 AE 版本的 Windows 机器上验证。用于商业分发时，请使用匹配的 Visual Studio/Adobe SDK 工具链重新构建并对二进制文件签名。
-
-## 测试
-
-```bash
+AE_SDK_ROOT=/path/to/AdobeSDK ./build.sh
+AE_SDK_ROOT=/path/to/AdobeSDK ./build_win.sh
+python3 scripts/package_release.py
 python3 test/check_params.py
+python3 test/check_windows_binary.py
+python3 test/check_version.py
 python3 test/check_release.py
 ```
 
-仓库仅包含经过脱敏处理的验证截图；不包含 `.aep` 工程、用户媒体、缓存、日志、SDK 文件或任何凭据。
-
-## 仓库与发布
-
-仓库：`luoboruodai/EdgeViz`
-发布标签：`v0.1.0`
+仓库：`luoboruodai/EdgeViz` · 发布标签：`v0.1.1`。

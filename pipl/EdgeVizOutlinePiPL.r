@@ -16,8 +16,11 @@ resource 'PiPL' (16000) {
 		Category {
 			"PlugIn EdgeViz"
 		},
-		/* [4] ARM64 entry point */
+		/* [4] Apple Silicon and Intel entry points for the universal bundle */
 		CodeMacARM64 {
+			"EffectMain"
+		},
+		CodeMacIntel64 {
 			"EffectMain"
 		},
 		/* [5] */
@@ -30,9 +33,9 @@ resource 'PiPL' (16000) {
 			PF_PLUG_IN_VERSION,
 			PF_PLUG_IN_SUBVERS
 		},
-		/* [7] PF_VERSION(0,1,0,RELEASE,1) = (0<<19)|(1<<15)|(0<<11)|(3<<9)|1 = 34305 (0x00008601) */
+		/* [7] PF_VERSION(0,1,1,RELEASE,1) = 36353 (0x00008E01) */
 		AE_Effect_Version {
-			34305
+			36353
 		},
 		/* [8] */
 		AE_Effect_Info_Flags {

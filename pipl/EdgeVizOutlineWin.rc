@@ -3,8 +3,8 @@
 16000 "PiPL" DISCARDABLE "EdgeViz.pipl"
 
 1 VERSIONINFO
- FILEVERSION 0,1,0,1
- PRODUCTVERSION 0,1,0,1
+ FILEVERSION 0,1,1,1
+ PRODUCTVERSION 0,1,1,1
  FILEFLAGSMASK 0x3fL
  FILEOS VOS_NT_WINDOWS32
  FILETYPE VFT_DLL
@@ -16,11 +16,11 @@ BEGIN
   BEGIN
    VALUE "CompanyName", "EdgeViz"
    VALUE "FileDescription", "EdgeViz After Effects Plug-in"
-   VALUE "FileVersion", "0.1.0"
+   VALUE "FileVersion", "0.1.1"
    VALUE "InternalName", "EdgeViz"
    VALUE "OriginalFilename", "EdgeViz.aex"
    VALUE "ProductName", "EdgeViz"
-   VALUE "ProductVersion", "0.1.0"
+   VALUE "ProductVersion", "0.1.1"
   END
  END
  BLOCK "VarFileInfo"

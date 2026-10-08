@@ -1,5 +1,5 @@
 /*
- * EdgeVizOutline.cpp — PF_Effect "EdgeViz" (com.edgeviz.outline) v0.1.0
+ * EdgeVizOutline.cpp — PF_Effect "EdgeViz" (com.edgeviz.outline) v0.1.1
  *
  * Cyclops-style layer visualization as a binary effect. Apply to any layer:
  *   structure group: edge frame + corner handles (3D layers projected through
@@ -106,6 +106,9 @@ static void ReleaseSuites(PF_InData *in_data, Suites *s)
   #define M_PI 3.141592653589793238462643383279502884
 #endif
 #if defined(_WIN32)
+  // Captured during GLOBAL_SETUP, before any render selectors are dispatched.
+  // A different thread must not call the AEGP geometry suites in the GUI host.
+  static volatile LONG gHostSetupThreadId = 0;
   #define EV_DBG_LOG_PATH "ev_dbg.log"
   #define EV_DBG_MARK_PATH "ev_dbg_on"
 #else
@@ -116,7 +119,7 @@ static void ReleaseSuites(PF_InData *in_data, Suites *s)
 #define PLUGIN_NAME        "EdgeViz"
 #define MAJOR_VERSION      0
 #define MINOR_VERSION      1
-#define BUG_VERSION        0
+#define BUG_VERSION        1
 #define STAGE_VERSION      PF_Stage_RELEASE
 #define BUILD_VERSION      1
 
@@ -454,7 +457,8 @@ static void SelectKeys(const Pt *v, A_long n, bool closed, A_long maxKeep, bool 
   keep[0] = true;
   A_long kept = 1;
   // simple 2-pass greedy: repeatedly take the sharpest remaining vertex
-  float *score = (float *)malloc(sizeof(float) * n);
+  float *score = (float *)malloc(sizeof(float) * (size_t)n);
+  if (!score) return; // keep the first vertex on allocation failure
   for (A_long i = 0; i < n; i++) {
     A_long ip = closed ? (i - 1 + n) % n : (i > 0 ? i - 1 : 0);
     A_long in = closed ? (i + 1) % n : (i < n - 1 ? i + 1 : n - 1);
@@ -2370,6 +2374,9 @@ static PF_Err
 GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
   PF_Err err = PF_Err_NONE;
+#if defined(_WIN32)
+  InterlockedExchange(&gHostSetupThreadId, (LONG)GetCurrentThreadId());
+#endif
   out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION, STAGE_VERSION, BUILD_VERSION);
   out_data->out_flags |= PF_OutFlag_PIX_INDEPENDENT | PF_OutFlag_USE_OUTPUT_EXTENT |
                          PF_OutFlag_SEND_UPDATE_PARAMS_UI | PF_OutFlag_NON_PARAM_VARY |
@@ -2442,6 +2449,18 @@ static bool IsAerenderProc()
   return isAerender;
 }
 
+static bool IsHostMainThread()
+{
+#if defined(_WIN32)
+  // Fail closed if the host has not completed GLOBAL_SETUP. Windows has no
+  // pthread_main_np equivalent; use the setup selector's thread identity.
+  const LONG tid = InterlockedCompareExchange(&gHostSetupThreadId, 0, 0);
+  return tid && (DWORD)tid == GetCurrentThreadId();
+#else
+  return pthread_main_np() != 0;
+#endif
+}
+
 static Blob *BakeBlob(PF_InData *in_data, PF_ParamDef *params[])
 {
   Blob *blob = BlobNew(GEO_BLOB_CAP);
@@ -2469,19 +2488,10 @@ static Blob *BakeBlob(PF_InData *in_data, PF_ParamDef *params[])
 static PF_Err
 FrameSetup8(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
-  // AEGP is only legal on the main (UI) thread; AE validates this and wedged
-  // the GUI with "internal verification" errors when we baked during
-  // PF_Cmd_RENDER. aerender runs selectors off the main thread but does not
-  // enforce that validation (the old render-time bake always worked there),
-  // so: aerender process -> always bake; GUI process -> bake only when this
-  // selector arrived on the main thread. On a skip, Render8 bakes inline.
-#if defined(_WIN32)
-  // The Windows host does not expose pthread_main_np. Keep FRAME_SETUP on the
-  // host selector path; Render8 still uses the serialized frame blob.
-  const bool mainT = true;
-#else
-  const bool mainT = pthread_main_np() != 0;
-#endif
+  // AE disallows AEGP queries from arbitrary GUI render workers. Do not
+  // assume every Windows FRAME_SETUP runs on the main thread. In aerender,
+  // selectors can run off-main and AEGP has historically been accepted.
+  const bool mainT = IsHostMainThread();
   const bool skip  = !IsAerenderProc() && !mainT;
   DbgLog("FS8: main=%d aer=%d needGeo=%d target=%ld skip=%d\n",
          (int)mainT, (int)IsAerenderProc(), (int)NeedGeoParams(params),
@@ -2792,12 +2802,13 @@ Render8(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Laye
   PF_LayerDef *src  = &params[PARAM_INPUT]->u.ld;
 
   // geometry blob baked during PF_Cmd_FRAME_SETUP (cached in frame_data).
-  // In the GUI, FRAME_SETUP may arrive on a worker thread where AEGP is
-  // skipped (see FrameSetup8); bake inline then — matchname probes are gone
-  // and every AEGP call is error-checked and fails quietly.
+  // A missing frame cache is not permission to call AEGP on a GUI render
+  // worker. Only an identified host main thread (or aerender) may bake here;
+  // otherwise the safe fallback below draws the input and a simple frame.
   Blob *blob = (Blob *)in_data->frame_data;
   bool ownBlob = false;
-  if (!blob && NeedGeoParams(params)) {
+  if (!blob && NeedGeoParams(params) &&
+      (IsAerenderProc() || IsHostMainThread())) {
     blob = BakeBlob(in_data, params);
     ownBlob = (blob != NULL);
     DbgLog("R8: inline-bake blob=%p%s\n", (void *)blob,

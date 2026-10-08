@@ -1,5 +1,5 @@
-EdgeViz v0.1.0 Windows x64 build
-Target: PE32+ DLL / x86-64
-PiPL: resource type PiPL, ID 16000, entry key 8664
-Export: EffectMain
-Runtime: structure checks passed; Windows After Effects runtime test remains required.
+EdgeViz v0.1.1 Windows x64 build / 2026-10-08
+PE32+ DLL x86-64; PiPL resource ID 16000, entry key 8664, export EffectMain.
+Built with x86_64 MinGW-w64 and Adobe CS6-compatible SDK headers.
+Static PE/PiPL/import checks passed. Windows AE 23-26 installation/loading and
+rendering were NOT tested on this macOS build host. No Authenticode signature.

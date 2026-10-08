@@ -11,9 +11,9 @@
 	<key>CFBundleName</key>
 	<string>EdgeViz</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>CFBundlePackageType</key>
 	<string>eFKT</string>
 	<key>CFBundleSignature</key>
@@ -24,7 +24,5 @@
 	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.15</string>
-	<key>LSRequiresCarbon</key>
-	<true/>
 </dict>
 </plist>

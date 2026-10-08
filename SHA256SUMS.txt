@@ -1,4 +1,2 @@
-c4dead3b9942e709beda5c352553c911523595fc389fe559247326b8a77a8ff9  artifacts/macos-arm64/EdgeViz.plugin/Contents/MacOS/EdgeViz
-99b92b9a64d0bb533b0da751a5b832cbfeae7a54b9d156878f601bb110d4787f  artifacts/macos-arm64/EdgeViz-v0.1.0-macOS-arm64.zip
-543cbde97aa3e3fc4b3740546c36b3283a11e6f0fb6e2139a364fd10814e307e  artifacts/windows-x64/EdgeViz.aex
-bb86ab762b2be3d2582c9150be4dd50f30c76557ca696a3a2941fe206df42abb  artifacts/windows-x64/EdgeViz-v0.1.0-Windows-x64.zip
+f3f11d4961704f175499ff00e57c1b315e59203684376bf00eb973c337d58453  EdgeViz-v0.1.1-macOS-universal.zip
+870ddb849acfd931485c45650fbb57dd55379f0d9999ef31a54174fd4b80551b  EdgeViz-v0.1.1-Windows-x64.zip

@@ -1,0 +1,8 @@
+EdgeViz v0.1.1 / Windows x64
+
+Quit After Effects. Remove older EdgeViz.aex and EdgeViz Outline.aex copies
+from C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\
+Copy EdgeViz.aex into that folder, then restart After Effects.
+If AE still crashes while scanning plug-ins, remove EdgeViz.aex and send
+AE version, Windows version, and the crash dump to the maintainer.
+Windows AE 23-26 runtime loading/rendering requires testing on each host.

@@ -1,0 +1,6 @@
+EdgeViz v0.1.1 / macOS Intel + Apple Silicon
+
+Quit After Effects. Remove older EdgeViz and EdgeViz Outline copies from
+~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
+Copy the EdgeViz.plugin folder into that directory, then restart After Effects.
+This bundle is ad-hoc signed, not notarized.
