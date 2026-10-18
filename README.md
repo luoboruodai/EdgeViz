@@ -6,15 +6,6 @@
 
 EdgeViz overlays layer bounds, text glyphs, shape paths, Bézier vertices/handles, mask silhouettes, motion paths, and nested precomp geometry. The effect match name and all 39 persisted parameter IDs are unchanged from v0.1.0.
 
-## CharWeave companion plug-in · separate beta
-
-This repository also hosts **CharWeave Native 0.4.4 beta 2**, a separate character-art effect. It does not replace EdgeViz and uses a distinct effect match name and release tag.
-
-- [CharWeave source and verification](charweave/README.md) · [Install guide](charweave/docs/INSTALL.en.md) · [中文指南](charweave/docs/INSTALL.zh-CN.md)
-- [CharWeave 0.4.4 beta 2 release](https://github.com/luoboruodai/EdgeViz/releases/tag/charweave-v0.4.4-beta.2): installable macOS universal and Windows x64 candidate ZIPs. Windows host acceptance is still pending.
-
-**The stable EdgeViz release remains v0.1.1.** CharWeave is a namespaced prerelease, not an EdgeViz upgrade. The EdgeViz instructions below remain unchanged.
-
 ## Downloads
 
 - `EdgeViz-v0.1.1-macOS-universal.zip` — `EdgeViz.plugin`, both `arm64` and `x86_64` slices, ad-hoc signed.

@@ -6,15 +6,6 @@
 
 EdgeViz 可显示图层边框、文字字形、形状路径、贝塞尔顶点及手柄、蒙版轮廓、运动路径和嵌套预合成几何。效果匹配名及 39 个持久化参数 ID 均保持不变，以延续旧工程的识别关系。
 
-## CharWeave 字符化插件 · 独立测试版
-
-此仓库同时托管 **CharWeave Native 0.4.4 beta 2**。它是独立的字符化效果，不替换 EdgeViz，使用单独的效果匹配名与发布标签。
-
-- [CharWeave 源码与验证范围](charweave/README.md) · [中文安装指南](charweave/docs/INSTALL.zh-CN.md) · [English](charweave/docs/INSTALL.en.md)
-- [CharWeave 0.4.4 beta 2 发布页](https://github.com/luoboruodai/EdgeViz/releases/tag/charweave-v0.4.4-beta.2)：macOS 通用版与 Windows x64 候选版安装 ZIP。Windows 真实宿主验收仍未完成。
-
-**EdgeViz 正式版保持 v0.1.1。** CharWeave 为单独命名的 prerelease，不是 EdgeViz 升级；以下 EdgeViz 安装说明保持不变。
-
 ## 下载
 
 - `EdgeViz-v0.1.1-macOS-universal.zip`：包含 arm64 和 x86_64 双架构 `EdgeViz.plugin`，开发用途的临时签名。
