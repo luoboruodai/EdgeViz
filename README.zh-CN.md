@@ -6,14 +6,29 @@
 
 EdgeViz 可显示图层边框、文字字形、形状路径、贝塞尔顶点及手柄、蒙版轮廓、运动路径和嵌套预合成几何。效果匹配名及 39 个持久化参数 ID 均保持不变，以延续旧工程的识别关系。
 
+<div align="center">
+
+<img src="docs/assets/charweave-banner.svg" alt="CharWeave 原生 After Effects 字符化插件" width="960">
+
+[![CharWeave 验证](https://github.com/luoboruodai/EdgeViz/actions/workflows/charweave.yml/badge.svg?branch=main)](https://github.com/luoboruodai/EdgeViz/actions/workflows/charweave.yml)
+
+</div>
+
 ## CharWeave 字符化插件 · 独立测试版
 
 此仓库同时托管 **CharWeave Native 0.4.4 beta 2**。它是独立的字符化效果，不替换 EdgeViz，使用单独的效果匹配名与发布标签。
 
-- [CharWeave 源码与验证范围](charweave/README.md) · [中文安装指南](charweave/docs/INSTALL.zh-CN.md) · [English](charweave/docs/INSTALL.en.md)
-- [CharWeave 0.4.4 beta 2 发布页](https://github.com/luoboruodai/EdgeViz/releases/tag/charweave-v0.4.4-beta.2)：macOS 通用版与 Windows x64 候选版安装 ZIP。Windows 真实宿主验收仍未完成。
+| 产品 | 状态 | 平台 |
+| --- | --- | --- |
+| EdgeViz | 正式版 `v0.1.1` | macOS 通用版 · Windows x64 |
+| CharWeave | 预发布版 `0.4.4 beta 2` | macOS 通用版 · Windows x64 候选版 |
 
-**EdgeViz 正式版保持 v0.1.1。** CharWeave 为单独命名的 prerelease，不是 EdgeViz 升级；以下 EdgeViz 安装说明保持不变。
+- [下载 CharWeave macOS 通用版 ZIP](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/CharWeave-0.4.4-b2-macOS.zip)
+- [下载 CharWeave Windows x64 ZIP](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/CharWeave-0.4.4-b2-Windows-x64.zip)
+- [SHA-256 校验值](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/SHA256SUMS.txt) · [发布说明](charweave/docs/RELEASE-0.4.4-beta.2.md)
+- [源码与验证范围](charweave/README.md) · [中文安装指南](charweave/docs/INSTALL.zh-CN.md) · [English](charweave/docs/INSTALL.en.md)
+
+**EdgeViz 正式版保持 v0.1.1。** CharWeave 为单独命名的 prerelease，不是 EdgeViz 升级；以下 EdgeViz 安装说明保持不变。CharWeave 的 Windows 真实宿主验收仍未完成。
 
 ## 下载
 

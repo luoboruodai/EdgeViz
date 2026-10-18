@@ -6,14 +6,29 @@
 
 EdgeViz overlays layer bounds, text glyphs, shape paths, Bézier vertices/handles, mask silhouettes, motion paths, and nested precomp geometry. The effect match name and all 39 persisted parameter IDs are unchanged from v0.1.0.
 
+<div align="center">
+
+<img src="docs/assets/charweave-banner.svg" alt="CharWeave Native After Effects character-art plug-in" width="960">
+
+[![CharWeave validation](https://github.com/luoboruodai/EdgeViz/actions/workflows/charweave.yml/badge.svg?branch=main)](https://github.com/luoboruodai/EdgeViz/actions/workflows/charweave.yml)
+
+</div>
+
 ## CharWeave companion plug-in · separate beta
 
 This repository also hosts **CharWeave Native 0.4.4 beta 2**, a separate character-art effect. It does not replace EdgeViz and uses a distinct effect match name and release tag.
 
-- [CharWeave source and verification](charweave/README.md) · [Install guide](charweave/docs/INSTALL.en.md) · [中文指南](charweave/docs/INSTALL.zh-CN.md)
-- [CharWeave 0.4.4 beta 2 release](https://github.com/luoboruodai/EdgeViz/releases/tag/charweave-v0.4.4-beta.2): installable macOS universal and Windows x64 candidate ZIPs. Windows host acceptance is still pending.
+| Product | Status | Platforms |
+| --- | --- | --- |
+| EdgeViz | Stable `v0.1.1` | macOS universal · Windows x64 |
+| CharWeave | Prerelease `0.4.4 beta 2` | macOS universal · Windows x64 candidate |
 
-**The stable EdgeViz release remains v0.1.1.** CharWeave is a namespaced prerelease, not an EdgeViz upgrade. The EdgeViz instructions below remain unchanged.
+- [Download CharWeave macOS universal ZIP](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/CharWeave-0.4.4-b2-macOS.zip)
+- [Download CharWeave Windows x64 ZIP](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/CharWeave-0.4.4-b2-Windows-x64.zip)
+- [SHA-256 checksums](https://github.com/luoboruodai/EdgeViz/releases/download/charweave-v0.4.4-beta.2/SHA256SUMS.txt) · [Release notes](charweave/docs/RELEASE-0.4.4-beta.2.md)
+- [Source and verification](charweave/README.md) · [Install guide](charweave/docs/INSTALL.en.md) · [中文指南](charweave/docs/INSTALL.zh-CN.md)
+
+**The stable EdgeViz release remains v0.1.1.** CharWeave is a namespaced prerelease, not an EdgeViz upgrade. The EdgeViz instructions below remain unchanged. Windows host acceptance for CharWeave is still pending.
 
 ## Downloads
 
