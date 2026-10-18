@@ -1,0 +1,16 @@
+# Local state, licensed SDKs and generated artifacts are not source releases.
+/PROJECT.md
+/build/
+/dist/
+/private/
+.env
+.env.*
+.DS_Store
+**/build/
+**/tests/style-library/
+**/*.aep
+**/*.aepx
+**/*.log
+**/SDK/
+**/__pycache__/
+*.pyc

@@ -1,0 +1,75 @@
+{
+  "product": "CharWeave Native",
+  "version": "0.4.4 beta 2",
+  "tag": "charweave-v0.4.4-beta.2",
+  "repository": "luoboruodai/EdgeViz",
+  "assets": [
+    {
+      "name": "CharWeave-0.4.4-b2-Windows-x64.zip",
+      "sha256": "3352388d0868c95f6564d14486895044ddaba94bf530573658bae655be446b01"
+    },
+    {
+      "name": "CharWeave-0.4.4-b2-macOS.zip",
+      "sha256": "182f8291628608336a735aaea3f143bea2a73c552fd142717888a19b518fc3ab"
+    }
+  ],
+  "checksumsAsset": "SHA256SUMS.txt",
+  "approvedRuntimeInputs": [
+    {
+      "path": "CharWeave-mac/Info.plist",
+      "sha256": "c110eb2a8a3d67bc0bcc17df512d9905c66ff9ca2a08fde31c94385a28819f14"
+    },
+    {
+      "path": "CharWeave-mac/pipl/CharWeavePiPL.r",
+      "sha256": "02870d1e18ba206fe5a0d0a794aa0f3d5f803ea2e2f3d450305dbf9c8b1e1fd5"
+    },
+    {
+      "path": "CharWeave-mac/src/CharWeave.mm",
+      "sha256": "1335f72988f548b2b739f9d2b8b7642a0e96458d3eefaae65d27babde9332645"
+    },
+    {
+      "path": "CharWeave-mac/src/StyleAtlas.inc",
+      "sha256": "b60aa2bedc86f45e92d2a8da274359a184b2a1e2b019f07c78cec8bfb26e27a9"
+    },
+    {
+      "path": "CharWeave-mac/src/StyleCheckout.inc",
+      "sha256": "7edaa26fd4928166a75ea1d609dc2f7a784018cded6dca541faf29fcadb408bf"
+    },
+    {
+      "path": "CharWeave-mac/src/StyleLibraryScript.inc",
+      "sha256": "3b5392b91488ce59e389390bb621ebad92f820f6bedef53ceb1789d2ffe97f32"
+    },
+    {
+      "path": "CharWeave-mac/src/StyleLibraryUI.inc",
+      "sha256": "9c7641d38541f1e36c658408d9ed8df7a5af82a12de4f26139894e97a92fa58f"
+    },
+    {
+      "path": "CharWeave-windows/pipl/CharWeave.rc",
+      "sha256": "1d8b24c100350a92c3cc1a6b628bcb281f58c5434ae598d5a438f8fdbec2e461"
+    },
+    {
+      "path": "CharWeave-windows/pipl/pipl.bin",
+      "sha256": "bd14d0db1f7a6c73b2382c049b536cafb12b4d0c1b1a5bd3a55dd2da9a7b451a"
+    },
+    {
+      "path": "CharWeave-windows/src/CharWeaveWin.cpp",
+      "sha256": "052c3714a04f3ef5f0aedc94bfa590d0b33f8a5d1568e658ed34c0f7532a7e0b"
+    },
+    {
+      "path": "CharWeave-windows/src/StyleAtlas.inc",
+      "sha256": "b60aa2bedc86f45e92d2a8da274359a184b2a1e2b019f07c78cec8bfb26e27a9"
+    },
+    {
+      "path": "CharWeave-windows/src/StyleCheckoutWin.inc",
+      "sha256": "9d40b77ec3a45b7cd5215dda4d14b109fdff466ec9eb391f73b41ac093e699e6"
+    },
+    {
+      "path": "CharWeave-windows/src/WinGlyph.inc",
+      "sha256": "8da78eb8cd18f6ad13ba114242849cfab76282377ff4cb3ddd84531ba0202286"
+    }
+  ],
+  "approvedBinaries": {
+    "macOS": "b4932dd8ed056227b48e3e94c2afc378f95d507b85eebeaab10712c061cb1bb0",
+    "Windows-x64": "44e07c55f7395869a562d672dd1ed688a79381aa0263cdf83fe8aeea5861ac8d"
+  }
+}

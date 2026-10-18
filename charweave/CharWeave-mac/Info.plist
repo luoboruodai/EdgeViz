@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>CharWeave</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.charweave.native</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>CharWeave Native</string>
+	<key>CFBundleDisplayName</key>
+	<string>CharWeave Native</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.4.4</string>
+	<key>CFBundleVersion</key>
+	<string>40402</string>
+	<key>CFBundlePackageType</key>
+	<string>eFKT</string>
+	<key>CFBundleSignature</key>
+	<string>FXTC</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.15</string>
+</dict>
+</plist>

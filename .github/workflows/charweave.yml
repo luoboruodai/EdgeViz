@@ -1,0 +1,48 @@
+name: CharWeave validation
+on:
+  push:
+    branches: [main]
+    tags: ['charweave-*']
+    paths:
+      - 'charweave/**'
+      - '.github/workflows/charweave.yml'
+  pull_request:
+    paths:
+      - 'charweave/**'
+      - '.github/workflows/charweave.yml'
+  workflow_dispatch:
+    inputs:
+      verify_release_assets:
+        description: 'Download and verify the exact CharWeave prerelease install assets'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  source-and-models:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: charweave
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+      - name: Public source policy and scanner rejection fixtures
+        run: python3 tools/check_public.py --self-test .
+      - name: Version, PiPL, parameter layout and guide links
+        run: python3 tools/check_metadata.py
+      - name: Release mapping and rejection fixtures (synthetic payloads)
+        run: PYTHONDONTWRITEBYTECODE=1 python3 tools/test_package_release.py
+      - name: JSX logic model (not AE integration)
+        run: node CharWeave-mac/tests/style_script.test.cjs
+      - name: GDI lifetime and failure-path model (not Windows integration)
+        run: |
+          clang++ -std=c++17 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all CharWeave-windows/tests/gdi_glyph_test.cpp -o /tmp/charweave-gdi-test
+          /tmp/charweave-gdi-test
+      - name: Exact prerelease install-archive readback
+        if: github.event_name == 'workflow_dispatch' && inputs.verify_release_assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/check_release_assets.py --download
